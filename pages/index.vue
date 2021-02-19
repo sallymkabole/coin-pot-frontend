@@ -166,7 +166,6 @@
             <v-progress-circular
               :rotate="-90"
               :size="100"
-              :width="15"
               :value="value"
               color="primary"
             >
@@ -177,51 +176,28 @@
       </v-col>
       <v-col cols="6">
         <v-card elevation="24" color="#26314C" height="100%">
-          <v-toolbar dark color="#202941" class="mb-4">
-            <v-toolbar-title>Mpesa Auction</v-toolbar-title>
+          <v-toolbar dark color="#202941" class="mb-4 ">
+            <v-toolbar-title >Mpesa Auction</v-toolbar-title>
           </v-toolbar>
           <v-row>
-            <v-col cols="6">
-              <v-card-text class="white--text mt-12">
-                <h2 class="card-title font-weight-bold mt-2 ml-2">
-                  Time Left To Open Bid
-                </h2>
+            <v-col cols="12">
+              <v-card-text class="white--text">
+                
 
-                <p class="d-inline-flex font-weight-bold ml-2 mt-1">
-                  {{ formattedTimeLeft }}
-                </p>
+               <div class="text-center">
+                 
+                  <no-ssr>
+                    <flip-countdown
+                      deadline="2021-02-25 00:00:00 " :showDays="false"
+                    ></flip-countdown>
+                  </no-ssr>
+                  <h2 class="card-title font-weight-bold mt-4">
+                  Left To Open Bid
+                </h2>
+                </div>
               </v-card-text>
             </v-col>
-            <v-col cols="6"
-              ><div class="base-timer">
-                <svg
-                  class="base-timer__svg"
-                  viewBox="0 0 100 100"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g class="base-timer__circle">
-                    <circle
-                      class="base-timer__path-elapsed"
-                      cx="50"
-                      cy="50"
-                      r="45"
-                    ></circle>
-                    <path
-                      :stroke-dasharray="circleDasharray"
-                      class="base-timer__path-remaining"
-                      :class="remainingPathColor"
-                      d="
-            M 50, 50
-            m -45, 0
-            a 45,45 0 1,0 90,0
-            a 45,45 0 1,0 -90,0
-          "
-                    ></path>
-                  </g>
-                </svg>
-                <span class="base-timer__label">{{ formattedTimeLeft }}</span>
-              </div></v-col
-            >
+            
           </v-row>
         </v-card>
       </v-col>
@@ -232,108 +208,21 @@
 <script>
 import Logo from "~/components/Logo.vue";
 import VuetifyLogo from "~/components/VuetifyLogo.vue";
-const FULL_DASH_ARRAY = 283;
-const WARNING_THRESHOLD = 10;
-const ALERT_THRESHOLD = 5;
+import FlipCountdown from "vue2-flip-countdown";
 
-const COLOR_CODES = {
-  info: {
-    color: "green",
-  },
-  warning: {
-    color: "orange",
-    threshold: WARNING_THRESHOLD,
-  },
-  alert: {
-    color: "red",
-    threshold: ALERT_THRESHOLD,
-  },
-};
-
-const TIME_LIMIT = 6000;
 export default {
   components: {
     Logo,
     VuetifyLogo,
+    FlipCountdown,
   },
+ 
+
   data() {
     return {
-      timePassed: 0,
-      timerInterval: null,
       interval: {},
-        value: 0,
+      value: 0,
     };
-
-  },
-  beforeDestroy () {
-      clearInterval(this.interval)
-    },
-
-  computed: {
-    circleDasharray() {
-      return `${(this.timeFraction * FULL_DASH_ARRAY).toFixed(0)} 283`;
-    },
-
-    formattedTimeLeft() {
-      const timeLeft = this.timeLeft;
-      const minutes = Math.floor(timeLeft / 60);
-      let seconds = timeLeft % 60;
-
-      if (seconds < 10) {
-        seconds = `0${seconds}`;
-      }
-
-      return `${minutes}:${seconds}`;
-    },
-
-    timeLeft() {
-      return TIME_LIMIT - this.timePassed;
-    },
-
-    timeFraction() {
-      const rawTimeFraction = this.timeLeft / TIME_LIMIT;
-      return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
-    },
-
-    remainingPathColor() {
-      const { alert, warning, info } = COLOR_CODES;
-
-      if (this.timeLeft <= alert.threshold) {
-        return alert.color;
-      } else if (this.timeLeft <= warning.threshold) {
-        return warning.color;
-      } else {
-        return info.color;
-      }
-    },
-  },
-
-  watch: {
-    timeLeft(newValue) {
-      if (newValue === 0) {
-        this.onTimesUp();
-      }
-    },
-  },
-
-  mounted() {
-    this.startTimer();
-    this.interval = setInterval(() => {
-        if (this.value === 100) {
-          return (this.value = 0)
-        }
-        this.value += 10
-      }, 1000)
-  },
-
-  methods: {
-    onTimesUp() {
-      clearInterval(this.timerInterval);
-    },
-
-    startTimer() {
-      this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
-    },
   },
 };
 </script>
@@ -350,56 +239,19 @@ export default {
   border-left: 6px solid #161d31;
   height: 50px;
 }
-.base-timer {
-  position: relative;
-  width: 300px;
-  height: 300px;
-
-  &__svg {
-    transform: scaleX(-1);
-  }
-
-  &__circle {
-    fill: none;
-    stroke: none;
-  }
-
-  &__path-elapsed {
-    stroke-width: 7px;
-    stroke: grey;
-  }
-
-  &__path-remaining {
-    stroke-width: 7px;
-    stroke-linecap: round;
-    transform: rotate(90deg);
-    transform-origin: center;
-    transition: 1s linear all;
-    fill-rule: nonzero;
-    stroke: currentColor;
-
-    &.green {
-      color: rgb(65, 184, 131);
-    }
-
-    &.orange {
-      color: orange;
-    }
-
-    &.red {
-      color: red;
-    }
-  }
-
-  &__label {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-  }
+.digit {
+  color: #ecf0f1;
+  font-size: 130px;
+  font-weight: 100;
+  margin: 10px;
+  text-align: center;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+.countdown {
+  display: flex;
 }
 </style>
