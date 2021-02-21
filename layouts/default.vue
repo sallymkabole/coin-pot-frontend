@@ -85,7 +85,7 @@
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>&copy; CoinPot {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
 </template>
