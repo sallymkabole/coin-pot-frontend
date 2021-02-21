@@ -1,29 +1,26 @@
 <template>
-  <v-container fluid>
-    <v-card height="300" class="mx-auto text-center" color="#26314C" dark>
-      
-      
-         <v-card-text class="">
-      <div class="display-1 font-weight-bold">
-        My Stats
-      </div>
-    </v-card-text>
+  <v-container>
+    <v-flex>
+      <v-card height="300" class="mx-auto text-center" color="#26314C" dark>
+        <v-card-text class="">
+          <div class="display-1 font-weight-bold">My Stats</div>
+        </v-card-text>
         <v-sparkline
-          
-          
           :value="value1"
           color="rgba(255, 255, 255, .7)"
           :height="48"
           line-width="0.5"
         >
         </v-sparkline>
-    </v-card>
+      </v-card>
+    </v-flex>
 
-    <v-row class="mt-2">
-      <v-col cols="4">
+    <v-layout row  class="mt-2">
+      <v-flex  class="pa-2 " md4 sm12>
         <v-card color="#26314C" height="200">
-          <v-card-actions>
-            <v-list-item class="grow">
+          <v-card-text class="">
+            <v-card-actions class="center--text" >
+            <v-list-item class="grow ">
               <v-list-item-avatar color="#ff8133">
                 <v-icon class="mr-1 white--text"> mdi-cash-plus </v-icon>
               </v-list-item-avatar>
@@ -38,9 +35,10 @@
               </v-list-item-content>
             </v-list-item>
           </v-card-actions>
+          </v-card-text>
         </v-card>
-      </v-col>
-      <v-col cols="4">
+      </v-flex>
+      <v-flex class="pa-2" md4 sm12>
         <v-card color="#26314C" height="200">
           <v-card-actions>
             <v-list-item class="grow">
@@ -61,8 +59,8 @@
             </v-list-item>
           </v-card-actions>
         </v-card>
-      </v-col>
-      <v-col cols="4">
+      </v-flex>
+      <v-flex class="pa-2" md4 xs12>
         <v-card color="#26314C" height="200">
           <v-card-actions>
             <v-list-item class="grow">
@@ -83,10 +81,10 @@
             </v-list-item>
           </v-card-actions>
         </v-card>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="6">
+      </v-flex>
+    </v-layout>
+    <v-layout row class="mt-2">
+      <v-flex class="pa-2" md6 sm12>
         <v-card class="card-one">
           <v-card-text class="card-one white--text">
             <h2 class="card-title font-weight-bold mt-2 ml-2">Mpesa Shares</h2>
@@ -94,8 +92,8 @@
             <p class="d-inline-flex font-weight-bold ml-2 mt-1">87,850</p>
           </v-card-text>
         </v-card>
-      </v-col>
-      <v-col cols="6">
+      </v-flex>
+      <v-flex class="pa-2" md6 sm12>
         <v-card class="card-one">
           <v-list-item class="grow">
             <v-list-item-avatar color="#ff8133">
@@ -112,95 +110,101 @@
             <v-row align="center" justify="end"> </v-row>
           </v-list-item>
         </v-card>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="6">
-        <v-card elevation="24" class="card-one mb-4">
-          <v-toolbar dark color="#202941">
-            <v-toolbar-title>Outgoing</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-chip class="ma-2" color="primary">
-              Outgoing share by status
-            </v-chip>
-          </v-toolbar>
+      </v-flex>
+    </v-layout>
 
-          <v-row class="white--text" align="center">
-            <v-col cols="3">
-              <v-progress-circular
-                :rotate="-90"
-                :size="100"
-                :width="15"
-                :value="value"
-                color="primary"
-                class="ml-12 mt-6"
+    <v-layout row>
+      <v-flex md6 xs 12 class="pa-2">
+        
+          <v-card elevation="24" class="card-one mb-4">
+            <v-toolbar dark color="#202941">
+              <v-toolbar-title>Outgoing</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-chip class="ma-2" color="primary">
+                Outgoing share by status
+              </v-chip>
+            </v-toolbar>
+
+            <v-row class="white--text" align="center">
+              <v-flex >
+                <v-progress-circular
+                  :rotate="-90"
+                  :size="100"
+                  :width="15"
+                  :value="value"
+                  color="primary"
+                  class="ml-12 mt-6"
+                >
+                  {{ value }}
+                </v-progress-circular></v-flex
               >
-                {{ value }}
-              </v-progress-circular></v-col
-            >
-            <v-col cols="6">
-              <v-row class="mt-4"
-                ><div class="hr mt-2 success"></div>
-                <span class="ml-4"> 0% Confirmed</span>
-              </v-row>
+              <v-flex>
+                <v-row class="mt-4"
+                  ><div class="hr mt-2 success"></div>
+                  <span class="ml-4"> 0% Confirmed</span>
+                </v-row>
 
-              <v-row
-                ><div class="hr mt-2 warning"></div>
-                <span class="ml-4"> 0% Paired</span>
-              </v-row>
-              <v-row
-                ><div class="hr mt-2 info"></div>
-                <span class="ml-4"> 99% Pending</span>
-              </v-row></v-col
-            >
-          </v-row>
-        </v-card>
-        <v-card elevation="24" class="card-one">
-          <v-toolbar dark color="#202941">
-            <v-toolbar-title>Incoming</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-chip class="ma-2" color="primary">
-              Incoming share by status
-            </v-chip>
-          </v-toolbar>
-          <v-row class="white--text" align="center">
-            <v-col cols="3">
-              <v-progress-circular
-                :rotate="-90"
-                :size="100"
-                :width="15"
-                :value="value"
-                color="primary"
-                class="ml-12 mt-6"
+                <v-row
+                  ><div class="hr mt-2 warning"></div>
+                  <span class="ml-4"> 0% Paired</span>
+                </v-row>
+                <v-row
+                  ><div class="hr mt-2 info"></div>
+                  <span class="ml-4"> 99% Pending</span>
+                </v-row></v-flex
               >
-                {{ value }}
-              </v-progress-circular></v-col
-            >
-            <v-col cols="6">
-              <v-row class="mt-4"
-                ><div class="hr mt-2 success"></div>
-                <span class="ml-4"> 0% Confirmed</span>
-              </v-row>
+            </v-row>
+          </v-card>
+    
+      
+          <v-card elevation="24" class="card-one">
+            <v-toolbar dark color="#202941">
+              <v-toolbar-title>Incoming</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-chip class="ma-2" color="primary">
+                Incoming share by status
+              </v-chip>
+            </v-toolbar>
+            <v-row class="white--text" align="center">
+              <v-flex>
+                <v-progress-circular
+                  :rotate="-90"
+                  :size="100"
+                  :width="15"
+                  :value="value"
+                  color="primary"
+                  class="ml-12 mt-6"
+                >
+                  {{ value }}
+                </v-progress-circular></v-flex
+              >
+              <v-col cols="6">
+                <v-row class="mt-4"
+                  ><div class="hr mt-2 success"></div>
+                  <span class="ml-4"> 0% Confirmed</span>
+                </v-row>
 
-              <v-row
-                ><div class="hr mt-2 warning"></div>
-                <span class="ml-4"> 0% Paired</span>
-              </v-row>
-              <v-row
-                ><div class="hr mt-2 info"></div>
-                <span class="ml-4"> 99% Pending</span>
-              </v-row></v-col
-            >
-          </v-row>
-        </v-card>
-      </v-col>
-      <v-col cols="6">
+                <v-row
+                  ><div class="hr mt-2 warning"></div>
+                  <span class="ml-4"> 0% Paired</span>
+                </v-row>
+                <v-row
+                  ><div class="hr mt-2 info"></div>
+                  <span class="ml-4"> 99% Pending</span>
+                </v-row></v-col
+              >
+            </v-row>
+          </v-card>
+      
+      </v-flex>
+
+      <v-flex class="pa-2" md6 sm12>
         <v-card elevation="24" color="#26314C" height="100%">
           <v-toolbar dark color="#202941" class="mb-4">
             <v-toolbar-title>Mpesa Auction</v-toolbar-title>
           </v-toolbar>
           <v-row>
-            <v-col cols="12">
+           >
               <v-card-text class="white--text">
                 <div class="text-center">
                   <no-ssr>
@@ -214,11 +218,11 @@
                   </h2>
                 </div>
               </v-card-text>
-            </v-col>
+            
           </v-row>
         </v-card>
-      </v-col>
-    </v-row>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -239,7 +243,7 @@ export default {
       interval: {},
       labels: ["12am", "3am", "6am", "9am", "12pm", "3pm", "6pm", "9pm"],
       value: 99,
-      value1:[0, 2, 5, 9, 5, 10, 3, 5, -4, -10, 1, 8, 2, 9, 0],
+      value1: [0, 2, 5, 9, 5, 10, 3, 5, -4, -10, 1, 8, 2, 9, 0],
     };
   },
 };
